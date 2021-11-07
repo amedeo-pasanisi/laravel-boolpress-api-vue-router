@@ -1,5 +1,5 @@
 # consegna laravel-boolpress
-Terminate la parte di CRUD legate all'area amministrativa della nostra applicazione integrando  
+Terminate la parte di CRUD legata all'area amministrativa della nostra applicazione integrando  
 - create
 - update
 - delete
