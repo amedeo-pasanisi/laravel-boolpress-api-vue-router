@@ -22,7 +22,7 @@
                                 <td>{!! $post['content'] !!}</td>
                                 <td>{{ $post['slug'] }}</td>
                                 <td>
-                                    <a href="{{ route('admin.posts.show', $post['id']) }}"
+                                    <a href="{{ route('admin.posts.show', $post['slug']) }}"
                                         class="btn btn-info">
                                         Details
                                     </a>
