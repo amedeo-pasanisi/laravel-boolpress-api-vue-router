@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Post;
 
 class PostController extends Controller
@@ -24,7 +25,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.posts.create');
     }
 
     /**
@@ -35,7 +36,29 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $form_data = $request->all();
+        $request->validate([
+            'title'=>'required|max:20',
+            'content'=>'required|max:100'
+        ]);
+
+        $new_post = new Post;
+        $new_post->fill($form_data);
+        
+        $slug = Str::slug($new_post->title, '-');
+        $slug_base = $slug;
+        $slug_presente = Post::where('slug', $slug)->first(); // tra i post, nella colonna 'slug',cerca lo slug uguale a quello creato con il nuovo post
+        
+        $contatore = 1;
+        while ($slug_presente) { // finchè esiste un post con lo slug uguale a quello creato:
+            $slug = $slug_base . '-' . $contatore; // aggiungi un suffisso,
+            $slug_presente = Post::where('slug', $slug)->first(); // controlla se è ancora presente uno slug uguale
+            $contatore++;
+        }
+
+        $new_post->slug = $slug;
+        $new_post->save();
+        return redirect()->route('admin.posts.index');
     }
 
     /**

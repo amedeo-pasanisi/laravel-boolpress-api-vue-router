@@ -12,6 +12,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Content</th>
                         <th scope="col">Slug</th>
+                        <th scope="col">Actions</th>
                       </tr>
                     </thead>
                     <tbody>
