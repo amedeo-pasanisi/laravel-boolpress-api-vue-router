@@ -5,6 +5,11 @@
         <div class="row">
             <div class="col-12">
                 <h1 class="mt-4 mb-4">Tutti post</h1>
+                @if (session('status'))
+                    <div class="alert alert-success">
+                        {{ session('status') }}
+                    </div>
+                @endif
                 <table class="table table-striped">
                     <thead>
                       <tr>
@@ -34,7 +39,7 @@
                                     <form class="d-inline-block" method="post" action="{{ route('admin.posts.destroy', $post['id']) }}">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                        <button type="submit" class="btn btn-danger delete_post">Delete</button>
                                     </form>
                                 </td>
                             </tr>

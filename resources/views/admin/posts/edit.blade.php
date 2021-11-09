@@ -10,7 +10,13 @@
 
                 <div class="form-group">
                     <label for="title">Title</label>
-                    <input value="{{ $post['title'] }}" type="text" name="title" class="form-control" id="title" placeholder="Enter the name of the post">
+                    <input value="{{ old('title', $post['title']) }}"
+                        type="text"
+                        name="title"
+                        class="form-control"
+                        id="title"
+                        placeholder="Enter the name of the post"
+                        class="@error('title') is-invalid @enderror">
                     
                     @error('title')
                         <div class="alert alert-danger"> {{$message}} </div>
@@ -18,7 +24,10 @@
                 </div>
                 <div class="form-group">
                     <label for="content">content</label>
-                    <textarea class="form-control" name="content" id="content">{!! $post['content'] !!}</textarea>
+                    <textarea class="form-control"
+                        name="content"
+                        id="content"
+                        class="@error('content') is-invalid @enderror">{!! old('content', $post['content']) !!}</textarea>
                     
                     @error('content')
                         <div class="alert alert-danger"> {{$message}} </div>

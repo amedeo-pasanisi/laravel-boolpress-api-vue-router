@@ -128,6 +128,6 @@ class PostController extends Controller
     public function destroy(Post $post)
     {
         $post->delete();
-        return redirect()->route('comics.index')->with('status', 'post deleted');
+        return redirect()->route('admin.posts.index')->with('status', 'post deleted');
     }
 }

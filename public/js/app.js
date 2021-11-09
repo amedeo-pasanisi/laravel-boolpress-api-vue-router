@@ -37268,7 +37268,25 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js"); // window.confirmDelete = function() {
+//     const resp = confirm('Confirm?');
+//     if(!resp) {
+//         event.preventDefault();
+//     }
+// };
+// dato che event è deprecated
+
+
+var deleteForm = document.querySelectorAll('.delete_post');
+deleteForm.forEach(function (item) {
+  item.addEventListener('submit', function (e) {
+    var resp = confirm('Confirm?');
+
+    if (!resp) {
+      e.preventDefault();
+    }
+  });
+});
 
 /***/ }),
 
