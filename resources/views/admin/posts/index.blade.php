@@ -27,7 +27,7 @@
                                         class="btn btn-info">
                                         Details
                                     </a>
-                                    <a href="{{-- {{ route('admin.posts.edit', $post['id']) }} --}}"
+                                    <a href="{{ route('admin.posts.edit', $post['id']) }}"
                                         class="btn btn-warning">
                                         Modify
                                     </a>

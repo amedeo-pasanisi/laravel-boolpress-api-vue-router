@@ -48,7 +48,6 @@ class PostController extends Controller
         $slug = Str::slug($new_post->title, '-');
         $slug_base = $slug;
         $slug_presente = Post::where('slug', $slug)->first(); // tra i post, nella colonna 'slug',cerca lo slug uguale a quello creato con il nuovo post
-        
         $contatore = 1;
         while ($slug_presente) { // finchè esiste un post con lo slug uguale a quello creato:
             $slug = $slug_base . '-' . $contatore; // aggiungi un suffisso,
@@ -83,9 +82,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('admin.posts.edit', compact('post'));
     }
 
     /**
@@ -95,9 +94,29 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $data = $request->all();
+        if ($data['title'] != $post['title']) {
+            $slug = Str::slug($data['title'], '-');
+            $slug_base = $slug;
+            $slug_presente = Post::where('slug', $slug)->first();
+            $contatore = 1;
+            while ($slug_presente) {
+                $slug = $slug_base . '-' . $contatore;
+                $slug_presente = Post::where('slug', $slug)->first();
+                $contatore++;
+            }
+            $data['slug'] = $slug;
+        }
+
+        $request->validate([
+            'title'=>'required|max:20',
+            'content'=>'required|max:100'
+        ]);
+
+        $post->update($data);
+        return redirect()->route('admin.posts.index');
     }
 
     /**
