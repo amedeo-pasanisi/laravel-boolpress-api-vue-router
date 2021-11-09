@@ -4,6 +4,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use App\Post;
+use App\Category;
 
 class PostController extends Controller
 {
@@ -25,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        $categories = Category::all();
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -39,7 +41,8 @@ class PostController extends Controller
         $form_data = $request->all();
         $request->validate([
             'title'=>'required|max:20',
-            'content'=>'required|max:100'
+            'content'=>'required|max:100',
+            'category_id'=>'nullable|exists:categories,id' // il category_id inserito, esiste nella tabella categories?
         ]);
 
         $new_post = new Post;

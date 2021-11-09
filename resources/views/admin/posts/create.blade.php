@@ -13,10 +13,9 @@
                         <input type="text"
                             name="title"
                             value="{{old('title')}}"
-                            class="form-control"
+                            class="form-control @error('title') is-invalid @enderror"
                             id="title"
-                            placeholder="Enter the name of the post"
-                            class="@error('title') is-invalid @enderror">
+                            placeholder="Enter the name of the post">
                     
                         @error('title')
                             <div class="alert alert-danger"> {{$message}} </div>
@@ -24,23 +23,29 @@
                     </div>
                     <div class="form-group">
                         <label for="content">Content</label>
-                        <textarea class="form-control" name="content" id="content" class="@error('content') is-invalid @enderror">{{old('content')}}</textarea>
+                        <textarea class="form-control @error('title') is-invalid @enderror" name="content" id="content">{{old('content')}}</textarea>
                         
                         @error('content')
                             <div class="alert alert-danger"> {{$message}} </div>
                         @enderror
                     </div>
-                    {{-- <div class="form-group">
-                        <label for="type">Type</label>                        
-                        <select class="form-control" name="type" id="type">
+                    <div class="form-group">
+                        <label for="category_id">category</label>                        
+                        <select name="category_id" id="category_id" class="form-control @error('category_id') is-invalid @enderror">
                             <option value="">-- seleziona --</option>
-                            <option value="a">a</option>
-                            <option value="b">b</option>
+                            @foreach ($categories as $category)
+                                {{-- in value inserisco l'id della category dato che è l'id ad essere salvato
+                                (grazie alle fillable e all'attributo name del tag select)
+                                nella colonna category_id della tabella posts --}}
+                                <option value="{{$category['id']}}"
+                                    {{old('category_id') == $category['id'] ? 'selected' : null}}>
+                                    {{$category['name']}}</option>
+                            @endforeach
                         </select>
-                        @error('type')
+                        @error('category')
                             <div class="alert alert-danger">{{$message}}</div>
                         @enderror
-                    </div> --}}
+                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
