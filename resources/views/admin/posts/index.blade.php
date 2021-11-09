@@ -31,7 +31,7 @@
                                         class="btn btn-warning">
                                         Modify
                                     </a>
-                                    <form class="d-inline-block" method="post" action="{{-- {{ route('posts.destroy', $post['id']) }} --}}">
+                                    <form class="d-inline-block" method="post" action="{{ route('admin.posts.destroy', $post['id']) }}">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger">Delete</button>
