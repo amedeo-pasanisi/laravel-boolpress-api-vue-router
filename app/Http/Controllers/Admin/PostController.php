@@ -44,7 +44,8 @@ class PostController extends Controller
         $request->validate([
             'title'=>'required|max:20',
             'content'=>'required|max:100',
-            'category_id'=>'nullable|exists:categories,id' // il category_id inserito, esiste nella tabella categories?
+            'category_id'=>'nullable|exists:categories,id', // il category_id inserito, esiste nella tabella categories?
+            'tags' => 'exists:tags,id'
         ]);
 
         $new_post = new Post;
@@ -62,6 +63,9 @@ class PostController extends Controller
 
         $new_post->slug = $slug;
         $new_post->save();
+
+        $new_post->tags()->attach($form_data['tags']);
+
         return redirect()->route('admin.posts.index');
     }
 
@@ -90,7 +94,8 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
-        return view('admin.posts.edit', compact('post', 'categories'));
+        $tags = Tag::all();
+        return view('admin.posts.edit', compact('post', 'categories', 'tags'));
     }
 
     /**
@@ -118,10 +123,20 @@ class PostController extends Controller
 
         $request->validate([
             'title'=>'required|max:20',
-            'content'=>'required|max:100'
+            'content'=>'required|max:100',
+            'category_id'=>'nullable|exists:categories,id',
+            'tags'=>'exists:tags,id'
         ]);
 
         $post->update($data);
+
+        if(array_key_exists('tags',$data)){
+            $post->tags()->sync($data['tags']);
+        }
+        else{
+            $post->tags()->sync([]);
+        }
+
         return redirect()->route('admin.posts.index');
     }
 
