@@ -46,6 +46,14 @@
                             <div class="alert alert-danger">{{$message}}</div>
                         @enderror
                     </div>
+                    <div class="form-group">
+                        @foreach ($tags as $tag)
+                            <div class="form-check form-check-inline">
+                                <input id="{{"tag" . $tag->id}}" value="{{$tag->id}}" name="tags[]" class="form-check-input" type="checkbox">
+                                <label for="{{"tag" . $tag->id}}" class="form-check-label">{{$tag->name}}</label>
+                            </div> 
+                        @endforeach
+                    </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
             </div>
