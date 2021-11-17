@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Auth;
 
 Route::get('/', 'HomeController@index')->name('home');
 
+Route::get('/vue-posts', 'HomeController@listPostsApi')->name('home');
+
 Auth::routes();
 
 // Route::get('/admin', 'HomeController@index')->name('admin');
